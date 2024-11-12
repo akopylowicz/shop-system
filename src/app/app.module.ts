@@ -14,9 +14,19 @@ import { CommonModule } from "@angular/common";
 @NgModule({
     declarations: [
         AppComponent,
+        ProductsComponent,
+        CartComponent,
+        FooterComponent,
         HeaderComponent
     ],
-    imports: [], 
+    imports: [
+        BrowserModule,
+        ProductsModule,
+        CartModule,
+        SharedModule,
+        AppRoutingModule,
+        CommonModule,
+    ], 
     providers: [],
     bootstrap: [AppComponent]
 })
