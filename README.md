@@ -36,3 +36,5 @@ Hier könnte stehen wie man das Projekt aufsetzt (im Moment gar nicht)
 
     src/app/app.component.ts:5:15:
       5 │   templateUrl: './app.component.html',
+
+      Lösung: https://www.reddit.com/r/angular/comments/1bunwx4/error_ng8001_appheader_is_not_a_know_element/?rdt=36210

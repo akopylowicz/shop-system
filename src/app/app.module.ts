@@ -12,6 +12,7 @@ import { FooterComponent } from "./shared/footer.component";
 import { CommonModule } from "@angular/common";
 
 @NgModule({
+
     declarations: [
         AppComponent,
         ProductsComponent,
@@ -24,8 +25,8 @@ import { CommonModule } from "@angular/common";
         ProductsModule,
         CartModule,
         SharedModule,
-        AppRoutingModule,
         CommonModule,
+        AppRoutingModule,
     ], 
     providers: [],
     bootstrap: [AppComponent]

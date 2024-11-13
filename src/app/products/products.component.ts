@@ -11,8 +11,6 @@ interface Product {
 
 @Component({
   selector: 'app-products',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
