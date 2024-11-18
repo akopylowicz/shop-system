@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CartComponent } from '../cart/cart.component';
+import { ProductsService } from '../products.service';
 
 interface Product {
   id: number;
@@ -18,24 +20,18 @@ interface Product {
 })
 export class ProductsComponent {
 
-  products: Product[] = [
-    {
-      id: 1,
-      name: 'Produkt A',
-      image: 'assets/images/product-a.jpg',
-      description: 'Beschreibung für Produkt A',
-      price: 29.99
-    },
-    {
-      id: 2,
-      name: 'Produkt B',
-      image: 'assets/images/product-b.jpg',
-      description: 'Beschreibung für Produkt B',
-      price: 19.99
-    }
-  ];
+  products: Product[] = [];
+
+  constructor(private productsService: ProductsService) {}
+
+  ngOnInit(): void {
+    this.productsService.getProducts().subscribe(data => {
+      console.log(data); 
+      this.products = data;
+    });
+  }
 
   addToCart(product: Product) {
-    // Noch implementieren
+    
   }
 }
