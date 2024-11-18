@@ -17,11 +17,9 @@ export interface Product {
 
 export class ProductsService {
 
-  private productsUrl = './src/assets/database/products.json';
-
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl);
+    return this.http.get<Product[]>('assets/database/products.json');
   }
 }

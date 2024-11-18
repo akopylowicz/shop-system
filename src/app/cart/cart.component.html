@@ -1,12 +1,20 @@
-<h2>Warenkorb</h2>
-<div *ngIf="cartItems.length; else emptyCart">
-  <div *ngFor="let item of cartItems" class="cart-item">
-    <p><strong>{{ item.name }}</strong></p>
-    <p>Preis: {{ item.price | currency:'EUR' }}</p>
-    <button (click)="removeFromCart(item)">Entfernen</button>
+<div>
+  <h1>Warenkorb</h1>
+
+  <div *ngIf="cartProducts.length === 0">
+    <p>Der Warenkorb ist leer.</p>
   </div>
-  <p><strong>Gesamtpreis: {{ getTotalPrice() | currency:'EUR' }}</strong></p>
-</div>
-<ng-template #emptyCart>
-  <p>Der Warenkorb ist leer.</p>
-</ng-template>
+
+  <div *ngIf="cartProducts.length > 0">
+    <div *ngFor="let product of cartProducts">
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <p>{{ product.price | currency:'EUR' }}</p>
+      <button (click)="removeFromCart(product.id)">Entfernen</button>
+    </div>
+
+    <div>
+      <h2>Gesamtpreis: {{ totalPrice | currency:'EUR' }}</h2>
+      <button (click)="clearCart()">Warenkorb leeren</button>
+    </div>
+  </div>

@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-}
-
+import { Product } from '../products.service';
+import { CartService } from './cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,17 +12,29 @@ interface CartItem {
 })
 export class CartComponent {
 
-  cartItems: CartItem[] = [
-    { id: 1, name: 'Heckenschere Test', price: 5.00 },
-    { id: 2, name: 'Auto Test', price: 300000.00 }
-  ];
-  // Erstmal fest im Code zum Testen, später noch Funktionen um Sachen in den Warenkorb hinzuzufügen/Entfernen
+  cartProducts: Product[] = []
+  totalPrice: number = 0;
 
-  removeFromCart(item: CartItem) {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
+  constructor(private cartService: CartService) {}
+
+  ngOnInit() {
+    this.cartProducts = this.cartService.getCart();
+    this.updateTotalPrice();
   }
 
-  getTotalPrice(): number {
-    return this.cartItems.reduce((total, item) => total + item.price, 0);
+  clearCart() {
+    this.cartService.clearCart();
+    this.cartProducts = [];
+    this.updateTotalPrice();
+  }
+
+  removeFromCart(productId: number) {
+    this.cartService.removeFromCart(productId);
+    this.cartProducts = this.cartService.getCart();
+    this.updateTotalPrice();
+  }
+
+  updateTotalPrice(): void {
+    this.totalPrice = this.cartService.getTotalPrice();
   }
 }

@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app.routes';
 import { HeaderComponent } from './shared/header.component';
 import { FooterComponent } from './shared/footer.component';
 import { provideHttpClient } from '@angular/common/http';
+import { ProductsModule } from './products/products.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { provideHttpClient } from '@angular/common/http';
     BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
+    ProductsModule
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
