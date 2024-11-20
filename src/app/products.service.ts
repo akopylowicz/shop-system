@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mockProducts } from 'src/assets/database/mock-Products';
 
 
 export interface Product {
@@ -17,9 +17,11 @@ export interface Product {
 
 export class ProductsService {
 
-  constructor(private http: HttpClient) {}
+  private readonly products = mockProducts;
+
+  constructor() {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>('assets/database/products.json');
+    return of(this.products);
   }
 }
