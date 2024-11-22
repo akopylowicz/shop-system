@@ -1,26 +1,15 @@
-<!--<h2>Produktübersicht</h2>
-<div *ngFor="let product of products" class="product">
-  <img [src]="product.image" alt="{{ product.name }}" width="100">
-  <h3>{{ product.name }}</h3>
-  <p>{{ product.description }}</p>
-  <p>Preis: {{ product.price | currency }}</p>
-  <button (click)="addToCart(product)">Zum Warenkorb hinzufügen</button>
-</div>-->
-<div class="p-4">
-  <h1 class="text-2xl font-bold text-center mb-6">Produkte</h1>
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    <div *ngFor="let product of products" class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg">
-      <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover">
-      <div class="p-4">
-        <h2 class="text-xl font-semibold mb-2">{{ product.name }}</h2>
-        <p class="text-gray-700 text-sm">{{ product.description }}</p>
-        <p class="text-lg font-bold text-blue-600 mt-4">{{ product.price | currency:'EUR' }}</p>
-        <button 
-          class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full hover:bg-blue-600"
-          (click)="addToCart(product)">
-          Zum Warenkorb hinzufügen
-        </button>
-      </div>
+<div>
+  <h1>Unsere Produkte</h1>
+  <div *ngIf="products$ | async as products; else loading">
+    <div *ngFor="let product of products">
+      <img [src]="product.image" alt="{{ product.name }}" />
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <p>{{ product.price | currency: 'EUR' }}</p>
+      <button (click)="addToCart(product)">Zum Warenkorb hinzufügen</button>
     </div>
   </div>
+  <ng-template #loading>
+    <p>Produkte werden geladen...</p>
+  </ng-template>
 </div>

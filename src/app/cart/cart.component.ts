@@ -1,40 +1,32 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '../products.service';
-import { CartService } from './cart.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product.model';
+import { selectCartItems, selectCartTotal } from './state/cart.selectors';
+import { removeFromCart, clearCart } from './state/cart.actions';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css',
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  cartItems$: Observable<Product[]>;
+  cartTotal$: Observable<number>;
 
-  cartProducts: Product[] = []
-  totalPrice: number = 0;
-
-  constructor(private cartService: CartService) {}
-
-  ngOnInit() {
-    this.cartProducts = this.cartService.getCart();
-    this.updateTotalPrice();
+  constructor(private store: Store) {
+    this.cartItems$ = this.store.select(selectCartItems);
+    this.cartTotal$ = this.store.select(selectCartTotal);
   }
 
-  clearCart() {
-    this.cartService.clearCart();
-    this.cartProducts = [];
-    this.updateTotalPrice();
+  removeFromCart(productId: number): void {
+    this.store.dispatch(removeFromCart({ productId }));
   }
 
-  removeFromCart(productId: number) {
-    this.cartService.removeFromCart(productId);
-    this.cartProducts = this.cartService.getCart();
-    this.updateTotalPrice();
-  }
-
-  updateTotalPrice(): void {
-    this.totalPrice = this.cartService.getTotalPrice();
+  clearCart(): void {
+    this.store.dispatch(clearCart());
   }
 }

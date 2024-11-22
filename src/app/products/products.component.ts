@@ -1,42 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartComponent } from '../cart/cart.component';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { Product } from '../models/product.model';
+import { loadProducts } from './state/products.actions';
+import { addToCart } from '../cart/state/cart.actions';
 import { ProductsService } from '../products.service';
-import { CartService } from '../cart/cart.service';
 
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  price: number;
-}
 
 @Component({
   selector: 'app-products',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css',
-  providers:[ProductsService]
+  styleUrls: ['./products.component.css'],
 })
+export class ProductsComponent implements OnInit {
 
-export class ProductsComponent {
+  products$: Observable<Product[]> = of([]);
 
-  products: Product[] = [];
+  //constructor(private store: Store) {
+  //  this.products$ = this.store.select(selectAllProducts);
+  //}
 
   constructor(
     private productsService: ProductsService,
-    private cartService: CartService
-    ) {}
+    private store: Store
+  ) {}
+
 
   ngOnInit(): void {
-    this.productsService.getProducts().subscribe(data => {
-      this.products = data;
+    this.productsService.getProducts().subscribe((products) => {
+      this.store.dispatch(loadProducts({ products }));
     });
+
+    this.products$ = this.store.select(state => state.products.products);
   }
 
-  addToCart(product: Product) {
-    this.cartService.addToCart(product);
+  addToCart(product: Product): void {
+    this.store.dispatch(addToCart({ product }));
   }
 }
