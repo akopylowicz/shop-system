@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartComponent } from '../cart/cart.component';
-import { ProductsService } from '../products.service';
-import { CartService } from '../cart/cart.service';
+import { CartComponent } from '../../cart/component/cart.component';
+import { ProductsService } from '../../products.service';
+import { CartService } from '../../cart/cart.service';
+import { RouterModule } from '@angular/router';
 
 interface Product {
   id: number;
@@ -15,7 +16,7 @@ interface Product {
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
   providers:[ProductsService]
